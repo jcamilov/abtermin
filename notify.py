@@ -12,15 +12,12 @@ load_dotenv()
 BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
 CHAT_ID = os.getenv('TELEGRAM_CHAT_ID')
 
-# Debug print
-print(f"Bot Token: {BOT_TOKEN}")
-print(f"Chat ID: {CHAT_ID}")
-
 # Set up logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
+logging.getLogger("httpx").setLevel(logging.WARNING)
 logger = logging.getLogger(__name__)
 
 class TelegramNotifier:
@@ -51,7 +48,7 @@ class TelegramNotifier:
                 text=message,
                 parse_mode='HTML'
             )
-            logger.info(f"Message sent successfully: {message[:50]}...")
+            # logger.info(f"Message sent successfully: {message[:50]}...")
             return True
         except TelegramError as e:
             logger.error(f"Failed to send message: {str(e)}")
@@ -75,7 +72,7 @@ class TelegramNotifier:
                     photo=InputFile(photo),
                     caption=caption
                 )
-            logger.info(f"Photo sent successfully: {photo_path}")
+            # logger.info(f"Photo sent successfully: {photo_path}")
             return True
         except TelegramError as e:
             logger.error(f"Failed to send photo: {str(e)}")

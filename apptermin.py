@@ -12,6 +12,11 @@ import sys
 from datetime import datetime
 import os
 from notify import send_photo_notification, send_notification
+from dotenv import load_dotenv
+
+load_dotenv()   
+
+URL = os.getenv('URL')  
 
 def setup_driver():
     chrome_options = Options()
@@ -106,14 +111,13 @@ def book_appointment():
     try:
         # Navigate to the website
         print("Navigating to the website...")
-        url = "https://stuttgart.konsentas.de/form/7/?signup_new=1"
-        driver.get(url)
+        driver.get(URL)
         time.sleep(2)  # Wait for page to fully load
         
         # Click on "Ausländerbehörde - eAT-Ausgabe"
         if not wait_and_click(driver, wait, By.XPATH, 
                             "//span[contains(text(), 'Ausländerbehörde - eAT-Ausgabe')]",
-                            "Clicking on 'Ausländerbehörde - eAT-Ausgabe'..."):
+                            "Clicking on section..."):
             raise Exception("Could not click on 'Ausländerbehörde - eAT-Ausgabe'")
         
         time.sleep(1)  # Wait for animation
@@ -183,7 +187,7 @@ def book_appointment():
                 # This means the "no appointments" message was not found
                 print("Possible appointments found!")
                 save_screenshot(driver, "appointments_available", "Appointments available! Move fast!!!")
-                send_notification(url)
+                send_notification(URL)
                 
             except Exception as e:
                 # This catches any other unexpected errors
@@ -217,6 +221,6 @@ if __name__ == "__main__":
     # check if the current time is 8:01am ECT or earlier. If so, send a notification
     current_time = datetime.now().strftime("%H:%M")
     current_date = datetime.now().strftime("%d.%m.%Y")
-    if current_time >= "08:01":
+    if current_time <= "08:01":
         send_notification("Starting the search for appointments on " + current_date)
     book_appointment()

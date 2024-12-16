@@ -1,0 +1,31 @@
+name: Web Automation Workflow
+
+on:
+  schedule:
+    # Cron para ejecutar cada 2 minutos de 8am a 11am CET, de lunes a viernes
+    # Nota: GitHub Actions usa UTC, por lo que ajustamos la hora
+    - cron: '*/2 6-9 * * 1-5'
+
+  # Permite ejecución manual
+  workflow_dispatch:
+
+jobs:
+  web-automation:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.9'
+        cache: 'pip'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+      
+    - name: Run Selenium Automation
+      run: python apptermin.py
