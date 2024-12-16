@@ -4,7 +4,7 @@ on:
   schedule:
     # Cron para ejecutar cada 2 minutos de 12:30 a 12:40am CET, de lunes a viernes
     # Nota: GitHub Actions usa UTC, por lo que ajustamos la hora a 12:30am CET
-    - cron: '*/2 11-12 * * 1-5'
+    - cron: '*/2 10-12 * * 1-5'
 
   # Permite ejecución manual
   workflow_dispatch:
