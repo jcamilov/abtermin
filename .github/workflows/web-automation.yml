@@ -2,7 +2,7 @@ name: Web Automation Workflow
 
 on:
   schedule:
-    - cron: '*/2 12-14 * * 1-5' # uses UTC time, which is CET+1
+    - cron: '*/5 7-9 * * 1-5' # uses UTC time, which is CET+1
 
   # Permite ejecución manual
   workflow_dispatch:
