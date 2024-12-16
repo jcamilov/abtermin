@@ -33,6 +33,9 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+        pip install webdriver-manager==4.0.1
+        pip list
+        pip show webdriver-manager
       
     - name: Run Selenium Automation
       run: python apptermin.py
