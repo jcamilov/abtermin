@@ -181,7 +181,7 @@ def book_appointment():
                     By.XPATH, "//div[@class='alert alert-danger']//strong[contains(text(), 'Keine verfügbaren Termine!')]"
                 )))
                 print("No appointments available")
-                save_screenshot(driver, "no_appointments", "Keine verfügbaren Termine / No appointments available yet")
+                #save_screenshot(driver, "no_appointments", "Keine verfügbaren Termine / No appointments available yet")
 
             except TimeoutException:
                 # This means the "no appointments" message was not found
@@ -221,6 +221,6 @@ if __name__ == "__main__":
     # check if the current time is 8:01am ECT or earlier. If so, send a notification
     current_time = datetime.now().strftime("%H:%M")
     current_date = datetime.now().strftime("%d.%m.%Y")
-    if current_time <= "08:01":
+    if current_time <= "08:04":
         send_notification("Starting the search for appointments on " + current_date)
     book_appointment()
