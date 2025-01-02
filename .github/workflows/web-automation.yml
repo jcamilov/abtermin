@@ -2,7 +2,7 @@ name: Web Automation Workflow
 
 on:
   schedule:
-    - cron: '*/5 7-9 * * 1-5' # uses UTC time, which is CET+1
+    - cron: "*/5 7-17 * * *" # uses UTC time, which is CET+1
 
   # Permite ejecución manual
   workflow_dispatch:
@@ -10,32 +10,32 @@ on:
 jobs:
   web-automation:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.9'
-        cache: 'pip'
-    
-    - name: Install Chrome
-      run: |
-        sudo mkdir -p /etc/apt/sources.list.d
-        sudo mkdir -p /etc/apt/keyrings
-        wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo gpg --dearmor -o /etc/apt/keyrings/google.gpg
-        echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/google.gpg] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google.list
-        sudo apt-get update
-        sudo apt-get install google-chrome-stable=131.0.6778.139-1
-    
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        pip install webdriver-manager==4.0.1
-        pip list
-        pip show webdriver-manager
-      
-    - name: Run Selenium Automation
-      run: python apptermin.py
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.9"
+          cache: "pip"
+
+      - name: Install Chrome
+        run: |
+          sudo mkdir -p /etc/apt/sources.list.d
+          sudo mkdir -p /etc/apt/keyrings
+          wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo gpg --dearmor -o /etc/apt/keyrings/google.gpg
+          echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/google.gpg] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google.list
+          sudo apt-get update
+          sudo apt-get install google-chrome-stable=131.0.6778.139-1
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install webdriver-manager==4.0.1
+          pip list
+          pip show webdriver-manager
+
+      - name: Run Selenium Automation
+        run: python apptermin.py
