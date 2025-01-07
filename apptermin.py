@@ -48,7 +48,7 @@ def wait_and_click(driver, wait, by, selector, message):
     try:
         element = wait.until(EC.element_to_be_clickable((by, selector)))
         driver.execute_script("arguments[0].scrollIntoView(true);", element)
-        time.sleep(0.5)
+        time.sleep(1)
         # Try JavaScript click first
         try:
             driver.execute_script("arguments[0].click();", element)
@@ -66,8 +66,8 @@ def wait_and_click(driver, wait, by, selector, message):
 def select_dropdown_option(driver, wait, option_text):
     print(f"Looking for option: {option_text}")
     try:
-        # Using the JavaScript approach that worked
-        selector = f"//a[@data-option-name='{option_text}']"
+        # Using a more specific selector that includes data-option-recno
+        selector = f"//a[@data-option-name='{option_text}' and @data-option-recno='14_33']"
         elements = driver.find_elements(By.XPATH, selector)
         if elements:
             driver.execute_script("arguments[0].click();", elements[0])
@@ -121,17 +121,16 @@ def book_appointment():
                             "Clicking on section..."):
             raise Exception("Could not click on 'Ausländerbehörde - eAT-Ausgabe'")
         
-        time.sleep(1)  # Wait for animation
+        time.sleep(1.5)  # Wait for animation
         
         # Click the dropdown using its specific ID
         print("Opening options dropdown...")
         try:
             dropdown_button = wait.until(EC.element_to_be_clickable((By.ID, "process-options-dropdown-14_66")))
             driver.execute_script("arguments[0].scrollIntoView(true);", dropdown_button)
-            time.sleep(0.5)
+            time.sleep(1)
             dropdown_button.click()
             print("Dropdown clicked successfully")
-            
             time.sleep(1)  # Wait for dropdown to open
             
             # Select the option
@@ -151,7 +150,7 @@ def book_appointment():
             raise Exception("Could not click first 'Weiter' button")
         
         # Wait for confirmation page and take screenshot
-        time.sleep(2)  # Wait for page to load
+        time.sleep(3)  # Wait for page to load
         # print("Taking screenshot of confirmation page...")
         # save_screenshot(driver, "confirmation_page")
         
@@ -163,7 +162,7 @@ def book_appointment():
                 "a.btn.btn-primary.btn-block.pull-left.btn_save.btn_formcontroll.btn_formcontroll_next[data-action='ota_form_control']")))
             
             # Scroll to the button
-            driver.execute_script("arguments[0].scrollIntoView(true);", weiter_button)
+            #driver.execute_script("arguments[0].scrollIntoView(true);", weiter_button)
             time.sleep(1)
             
             # Try JavaScript click first
